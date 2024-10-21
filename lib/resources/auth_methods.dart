@@ -5,10 +5,20 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:instagram_clone/resources/storage_methods.dart';
+import '../models/user.dart' as models;
 
 class AuthMethods {
   final FirebaseAuth _auth = FirebaseAuth.instance;
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
+
+  Future<models.User> getUserDetails() async {
+    User? currentUser = _auth.currentUser!;
+
+    DocumentSnapshot snap =
+        await _firestore.collection('users').doc(currentUser.uid).get();
+
+    return models.User.fromSnap(snap);
+  }
 
   //signup user
   Future<String> SignUpUser({
@@ -30,16 +40,20 @@ class AuthMethods {
 
         String photoUrl = await StorageMethods()
             .uploadImageToStorage('profilepics', file, false);
-        await _firestore.collection("users").doc(credential.user!.uid).set({
-          'usernmae': name,
-          'email': email,
-          'password': password,
-          'bio': bio,
-          'uid': credential.user!.uid,
-          'followers': [],
-          'following': [],
-          'photoUrl': photoUrl,
-        });
+
+        //add user to database
+        models.User user = models.User(
+            uid: credential.user!.uid,
+            email: email,
+            name: name,
+            bio: bio,
+            photoUrl: photoUrl,
+            followers: [],
+            following: []);
+
+        await _firestore.collection("users").doc(credential.user!.uid).set(
+              user.toJson(),
+            );
         res = "suceesful";
       }
     } on FirebaseAuthException catch (err) {
