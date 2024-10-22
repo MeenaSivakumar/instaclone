@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:instagram_clone/models/user.dart' as models;
 import 'package:instagram_clone/providers/user_provider.dart';
+import 'package:instagram_clone/utils/global_variables.dart';
 import 'package:provider/provider.dart';
 
 import '../utils/colors.dart';
@@ -44,14 +45,8 @@ class _MobileScreeLayoutState extends State<MobileScreeLayout> {
       body: PageView(
         controller: pageController,
         onPageChanged: onPageChanged,
-        children: [
-          Text('home'),
-          Text('search'),
-          Text('add_post'),
-          Text('favorite'),
-          Text('profile'),
-        ],
-        physics: NeverScrollableScrollPhysics(),
+        physics: const NeverScrollableScrollPhysics(),
+        children: homeScreenItems,
       ),
       bottomNavigationBar: BottomNavigationBar(
         backgroundColor: primaryColor,
