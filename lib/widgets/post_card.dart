@@ -1,12 +1,15 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:instagram_clone/providers/user_provider.dart';
 import 'package:instagram_clone/resources/firestore_methods.dart';
+import 'package:instagram_clone/screens/comments_screen.dart';
 import 'package:instagram_clone/utils/colors.dart';
+import 'package:instagram_clone/utils/utils.dart';
 import 'package:instagram_clone/widgets/like_animation.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
-import '../models/user.dart';
+import '../models/user.dart' as models;
 
 class PostCard extends StatefulWidget {
   final snap;
@@ -19,8 +22,24 @@ class PostCard extends StatefulWidget {
 class _PostCardState extends State<PostCard> {
   @override
   Widget build(BuildContext context) {
+    int commentLen = 0;
     bool isLikeAnimating = false;
-    final User user = Provider.of<UserProvider>(context).getUser;
+
+    fetchCommentLen() async {
+      try {
+        QuerySnapshot snap = await FirebaseFirestore.instance
+            .collection('posts')
+            .doc(widget.snap['postId'])
+            .collection('comments')
+            .get();
+        commentLen = snap.docs.length;
+      } catch (err) {
+        ShowSnackBar(err.toString(), context);
+      }
+      setState(() {});
+    }
+
+    final models.User user = Provider.of<UserProvider>(context).getUser;
     return Container(
       color: mobileBackgroundColor,
       padding: const EdgeInsets.symmetric(vertical: 10),
@@ -134,7 +153,7 @@ class _PostCardState extends State<PostCard> {
           ),
 
           Row(
-            children: [
+            children: <Widget>[
               LikeAnimation(
                 isAnimating: widget.snap['likes'].contains(user.uid),
                 smallLike: true,
@@ -153,9 +172,15 @@ class _PostCardState extends State<PostCard> {
                 ),
               ),
               IconButton(
-                onPressed: () {},
                 icon: const Icon(
                   Icons.comment_rounded,
+                ),
+                onPressed: () => Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder: (context) => CommentsScreen(
+                      postId: widget.snap['postId'].toString(),
+                    ),
+                  ),
                 ),
               ),
               IconButton(
@@ -177,7 +202,7 @@ class _PostCardState extends State<PostCard> {
               ),
             ],
           ),
-          //description and no oof commands
+          //description and no of commands
 
           Container(
             padding: const EdgeInsets.symmetric(horizontal: 12),
@@ -219,7 +244,13 @@ class _PostCardState extends State<PostCard> {
                   ),
                 ),
                 InkWell(
-                  onTap: () {},
+                  onTap: () => Navigator.of(context).push(
+                    MaterialPageRoute(
+                      builder: (context) => CommentsScreen(
+                        postId: widget.snap['postId'].toString(),
+                      ),
+                    ),
+                  ),
                   child: Container(
                     padding: const EdgeInsets.symmetric(vertical: 4),
                     child: Text(
