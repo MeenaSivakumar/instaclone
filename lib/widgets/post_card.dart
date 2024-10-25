@@ -39,6 +39,14 @@ class _PostCardState extends State<PostCard> {
       setState(() {});
     }
 
+    deletePost(String postId) async {
+      try {
+        await FireStoreMethods().deletePost(postId);
+      } catch (err) {
+        ShowSnackBar(err.toString(), context);
+      }
+    }
+
     final models.User user = Provider.of<UserProvider>(context).getUser;
     return Container(
       color: mobileBackgroundColor,
@@ -85,7 +93,11 @@ class _PostCardState extends State<PostCard> {
                             'Delete',
                           ]
                               .map((e) => InkWell(
-                                  onTap: () {},
+                                  onTap: () {
+                                    deletePost(
+                                        widget.snap['postId'].toString());
+                                    Navigator.pop(context);
+                                  },
                                   child: Container(
                                     padding: const EdgeInsets.symmetric(
                                         vertical: 12, horizontal: 16),

@@ -3,6 +3,7 @@ import 'dart:typed_data';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:instagram_clone/models/post.dart';
 import 'package:instagram_clone/resources/storage_methods.dart';
+import 'package:instagram_clone/utils/utils.dart';
 import 'package:uuid/uuid.dart';
 import 'package:uuid/v1.dart';
 
@@ -59,7 +60,7 @@ class FireStoreMethods {
     }
   }
 
- Future<String> postComment(String postId, String text, String uid,
+  Future<String> postComment(String postId, String text, String uid,
       String name, String profilePic) async {
     String res = "Some error occurred";
     try {
@@ -87,5 +88,15 @@ class FireStoreMethods {
       res = err.toString();
     }
     return res;
+  }
+
+  Future<void> deletePost(String postId) async {
+    try {
+      if (postId.isNotEmpty) {
+        _firestore.collection('posts').doc(postId).delete();
+      }
+    } catch (e) {
+      print(e.toString());
+    }
   }
 }

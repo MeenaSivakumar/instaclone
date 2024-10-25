@@ -49,12 +49,13 @@ class AuthMethods {
             bio: bio,
             photoUrl: photoUrl,
             followers: [],
-            following: []);
+            following: [],
+            password: password);
 
         await _firestore.collection("users").doc(credential.user!.uid).set(
               user.toJson(),
             );
-        res = "suceesful";
+        res = "sucessful";
       }
     } on FirebaseAuthException catch (err) {
       if (err.code == 'invalid-email') {
@@ -76,13 +77,14 @@ class AuthMethods {
       if (email.isNotEmpty || password.isNotEmpty) {
         await _auth.signInWithEmailAndPassword(
             email: email, password: password);
-        res = 'suceesful';
+        res = 'sucessful';
       } else {
         res = 'please enter valid email and password';
       }
     } catch (err) {
       res = err.toString();
     }
+    print(res);
     return res;
   }
 }
