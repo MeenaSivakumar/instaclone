@@ -86,9 +86,10 @@ class _PostCardState extends State<PostCard> {
                       context: context,
                       builder: (context) => Dialog(
                         child: ListView(
-                          padding: const EdgeInsets.symmetric(
-                            vertical: 16,
+                          padding: const EdgeInsets.symmetric(vertical: 
+                           16,
                           ),
+                          shrinkWrap: true,
                           children: [
                             'Delete',
                           ]
