@@ -10,7 +10,7 @@ class User {
   final List following;
   final String password;
 
-  const User( {
+  const User({
     required this.uid,
     required this.email,
     required this.name,
@@ -29,21 +29,20 @@ class User {
         'bio': bio,
         'followers': followers,
         'following': following,
-        'password':password,
+        'password': password,
       };
 
   static User fromSnap(DocumentSnapshot snap) {
     var snapshot = snap.data() as Map<String, dynamic>;
-   
+
     return User(
-        uid: snapshot['uid']??'',
-        email: snapshot['email']??'',
-        name: snapshot['username']??'',
-        bio: snapshot['bio']??'',
-        photoUrl: snapshot['photourl']??'',
-        followers: snapshot['followers']??[],
-        following: snapshot['following']??[],
-        password: snapshot['password']??'');
+        uid: snapshot['uid'] ?? '',
+        email: snapshot['email'] ?? '',
+        name: snapshot['username'] ?? '',
+        bio: snapshot['bio'] ?? '',
+        photoUrl: snapshot['photourl'] ?? '',
+        followers: snapshot['followers'] ?? [],
+        following: snapshot['following'] ?? [],
+        password: snapshot['password'] ?? '');
   }
-  
 }

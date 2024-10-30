@@ -86,8 +86,8 @@ class _PostCardState extends State<PostCard> {
                       context: context,
                       builder: (context) => Dialog(
                         child: ListView(
-                          padding: const EdgeInsets.symmetric(vertical: 
-                           16,
+                          padding: const EdgeInsets.symmetric(
+                            vertical: 16,
                           ),
                           shrinkWrap: true,
                           children: [
@@ -206,7 +206,9 @@ class _PostCardState extends State<PostCard> {
                 child: Align(
                   alignment: Alignment.bottomRight,
                   child: IconButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      ShowSnackBar("saved", context);
+                    },
                     icon: const Icon(
                       Icons.bookmark_outline,
                     ),
@@ -266,10 +268,10 @@ class _PostCardState extends State<PostCard> {
                   ),
                   child: Container(
                     padding: const EdgeInsets.symmetric(vertical: 4),
-                    child: Text(
+                    child: const Text(
                       "view all  comments",
                       style:
-                          const TextStyle(fontSize: 16, color: secondaryColor),
+                          TextStyle(fontSize: 16, color: secondaryColor),
                     ),
                   ),
                 ),

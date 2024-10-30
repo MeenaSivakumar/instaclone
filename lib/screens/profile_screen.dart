@@ -1,8 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_core/firebase_core.dart';
+
 import 'package:flutter/material.dart';
 import 'package:instagram_clone/resources/firestore_methods.dart';
+import 'package:instagram_clone/screens/dispaly_profile.dart';
 import 'package:instagram_clone/screens/login_screen.dart';
 import 'package:instagram_clone/utils/colors.dart';
 import 'package:instagram_clone/utils/utils.dart';
@@ -96,9 +97,21 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                   mainAxisAlignment:
                                       MainAxisAlignment.spaceEvenly,
                                   children: [
-                                    buildStatColumn(postLen, "posts"),
-                                    buildStatColumn(followers, "followers"),
-                                    buildStatColumn(following, "following"),
+                                    buildStatColumn(
+                                      postLen,
+                                      "posts",
+                                      [],
+                                    ),
+                                    buildStatColumn(
+                                      followers,
+                                      "followers",
+                                      userData['followers'],
+                                    ),
+                                    buildStatColumn(
+                                      following,
+                                      "following",
+                                      userData['following'],
+                                    ),
                                   ],
                                 ),
                                 Row(
@@ -230,7 +243,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
           );
   }
 
-  Column buildStatColumn(int num, String label) {
+  Column buildStatColumn(int num, String label, List<dynamic> userIds) {
+
+    List<String> _userIds = userIds.cast<String>();
     return Column(
       mainAxisSize: MainAxisSize.min,
       mainAxisAlignment: MainAxisAlignment.center,
@@ -238,19 +253,31 @@ class _ProfileScreenState extends State<ProfileScreen> {
         Text(
           num.toString(),
           style: const TextStyle(
-            fontSize: 18,
-            fontWeight: FontWeight.bold,
+            fontSize: 15,
+            fontWeight: FontWeight.w400,
+            color: Colors.grey,
           ),
         ),
         Container(
           margin: const EdgeInsets.only(top: 4),
-          child: Text(
-            label,
-            style: const TextStyle(
-              fontSize: 15,
-              fontWeight: FontWeight.w400,
-              color: Colors.grey,
+          child: TextButton(
+            child: Text(
+              label,
+              style: const TextStyle(
+                fontSize: 15,
+                fontWeight: FontWeight.w400,
+                color: Colors.grey,
+              ),
             ),
+            onPressed: () {
+              if (label == "followers" || label == "following") {
+                Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder: (context) => DispalyProfile(userIds: _userIds ,title:label ,),
+                  ),
+                );
+              }
+            },
           ),
         ),
       ],

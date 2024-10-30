@@ -4,7 +4,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:instagram_clone/models/user.dart';
 import 'package:instagram_clone/providers/user_provider.dart';
 import 'package:instagram_clone/resources/firestore_methods.dart';
-import 'package:instagram_clone/utils/colors.dart';
+
 import 'package:instagram_clone/utils/utils.dart';
 import 'package:provider/provider.dart';
 
@@ -30,11 +30,11 @@ class _AddPostScreenState extends State<AddPostScreen> {
         profImage,
       );
       res = "success";
-      if(res == "success"){
+      if (res == "success") {
         ShowSnackBar("Posted", context);
       }
     } catch (e) {
-         ShowSnackBar(e.toString(), context);
+      ShowSnackBar(e.toString(), context);
     }
   }
 
@@ -103,7 +103,11 @@ class _AddPostScreenState extends State<AddPostScreen> {
               centerTitle: false,
               actions: <Widget>[
                 TextButton(
-                  onPressed: () => postImage(user.uid,user.name,user.photoUrl,),
+                  onPressed: () => postImage(
+                    user.uid,
+                    user.name,
+                    user.photoUrl,
+                  ),
                   child: const Text(
                     "Post",
                     style: TextStyle(

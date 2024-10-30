@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:instagram_clone/models/user.dart' as models;
-import 'package:instagram_clone/providers/user_provider.dart';
 import 'package:instagram_clone/utils/global_variables.dart';
-import 'package:provider/provider.dart';
+
 
 import '../utils/colors.dart';
 
@@ -52,20 +50,17 @@ class _MobileScreeLayoutState extends State<MobileScreeLayout> {
         backgroundColor: primaryColor,
         items: <BottomNavigationBarItem>[
           BottomNavigationBarItem(
-            icon: Icon(
-              Icons.home,
-              color: (_page == 0) ? primaryColor : secondaryColor,
-              
-            ),
-            label: 'home'
-          ),
+              icon: Icon(
+                Icons.home,
+                color: (_page == 0) ? primaryColor : secondaryColor,
+              ),
+              label: 'home'),
           BottomNavigationBarItem(
-            icon: Icon(
-              Icons.search,
-              color: (_page == 1) ? primaryColor : secondaryColor,
-            ),
-            label: 'search'
-          ),
+              icon: Icon(
+                Icons.search,
+                color: (_page == 1) ? primaryColor : secondaryColor,
+              ),
+              label: 'search'),
           BottomNavigationBarItem(
             icon: Icon(
               Icons.add_box,

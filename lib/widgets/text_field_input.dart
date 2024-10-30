@@ -1,4 +1,4 @@
-import 'package:flutter/foundation.dart';
+
 import 'package:flutter/material.dart';
 
 class TextFieldInput extends StatelessWidget {
@@ -9,7 +9,7 @@ class TextFieldInput extends StatelessWidget {
   const TextFieldInput(
       {super.key,
       required this.textEditingController,
-      this.isPass=false,
+      this.isPass = false,
       required this.hintText,
       required this.textInputType});
 

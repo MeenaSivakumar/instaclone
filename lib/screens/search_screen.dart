@@ -1,9 +1,10 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:instagram_clone/screens/profile_screen.dart';
 import 'package:instagram_clone/utils/colors.dart';
+import 'package:instagram_clone/widgets/search_filed.dart';
 
 class SearchScreen extends StatefulWidget {
   const SearchScreen({super.key});
@@ -21,22 +22,22 @@ class _SearchScreenState extends State<SearchScreen> {
     searchController.dispose();
   }
 
+  void onsubmitted(String _) {
+    setState(() {
+      isShowUser = true;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: mobileBackgroundColor,
         title: Form(
-          child: TextField(
+          child: SearchFiled(
             controller: searchController,
-            decoration: InputDecoration(
-              labelText: 'search for a user....',
-            ),
-            onSubmitted: (String _) {
-              setState(() {
-                isShowUser = true;
-              });
-            },
+            labelText: 'search for a user...',
+            onsubmitted: onsubmitted,
           ),
         ),
       ),
@@ -62,8 +63,8 @@ class _SearchScreenState extends State<SearchScreen> {
                         onTap: () => Navigator.of(context).push(
                           MaterialPageRoute(
                             builder: (context) => ProfileScreen(
-                              uid: (snapshot.data! as dynamic).docs[index]['uid'],
-                                  
+                              uid: (snapshot.data! as dynamic).docs[index]
+                                  ['uid'],
                             ),
                           ),
                         ),

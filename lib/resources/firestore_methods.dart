@@ -3,9 +3,8 @@ import 'dart:typed_data';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:instagram_clone/models/post.dart';
 import 'package:instagram_clone/resources/storage_methods.dart';
-import 'package:instagram_clone/utils/utils.dart';
+
 import 'package:uuid/uuid.dart';
-import 'package:uuid/v1.dart';
 
 class FireStoreMethods {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
@@ -112,11 +111,11 @@ class FireStoreMethods {
         await _firestore.collection('users').doc(uid).update({
           'following': FieldValue.arrayRemove([followId])
         });
-      }else{
+      } else {
         await _firestore.collection('users').doc(followId).update({
           'followers': FieldValue.arrayUnion([uid])
         });
-         await _firestore.collection('users').doc(uid).update({
+        await _firestore.collection('users').doc(uid).update({
           'following': FieldValue.arrayUnion([followId])
         });
       }
@@ -124,5 +123,5 @@ class FireStoreMethods {
       print(e.toString());
     }
   }
-  
 }
+ 

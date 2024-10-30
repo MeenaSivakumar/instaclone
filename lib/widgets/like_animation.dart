@@ -51,11 +51,11 @@ class _LikeAnimationState extends State<LikeAnimation>
         const Duration(milliseconds: 200),
       );
     }
-    if(widget.onEnd != null){
+    if (widget.onEnd != null) {
       widget.onEnd!();
     }
   }
-  
+
   @override
   void dispose() {
     super.dispose();

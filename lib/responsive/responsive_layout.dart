@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
+
 import 'package:instagram_clone/providers/user_provider.dart';
 import 'package:instagram_clone/utils/global_variables.dart';
 import 'package:provider/provider.dart';
@@ -18,16 +18,16 @@ class ResponsiveLayout extends StatefulWidget {
 }
 
 class _ResponsiveLayoutState extends State<ResponsiveLayout> {
- @override
- void initState() {
+  @override
+  void initState() {
     super.initState();
     addData();
   }
-  addData(){
-    UserProvider _userProvider = Provider.of(context,listen: false);
-     _userProvider.refreshUser();
+
+  addData() {
+    UserProvider _userProvider = Provider.of(context, listen: false);
+    _userProvider.refreshUser();
   }
- 
 
   @override
   Widget build(BuildContext context) {
